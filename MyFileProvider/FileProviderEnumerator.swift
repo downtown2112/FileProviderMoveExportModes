@@ -40,6 +40,7 @@ class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             let id1 = NSFileProviderItemIdentifier("item1")
             let id2 = NSFileProviderItemIdentifier("item2")
+            let id3 = NSFileProviderItemIdentifier("folder1")
             
             let items: [FileProviderItem] = [
                 FileProviderItem(itemIdentifier: id1,
@@ -49,7 +50,11 @@ class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
                 FileProviderItem(itemIdentifier: id2,
                                  parentIdentifier: self.enumeratedItemIdentifier,
                                  filename: "File 2",
-                                 typeIdentifier: "public.text")
+                                 typeIdentifier: "public.text"),
+                FileProviderItem(itemIdentifier: id3,
+                                 parentIdentifier: self.enumeratedItemIdentifier,
+                                 filename: "Folder 1",
+                                 typeIdentifier: "public.folder")
             ]
             observer.didEnumerate(items)
             observer.finishEnumerating(upTo: nil)

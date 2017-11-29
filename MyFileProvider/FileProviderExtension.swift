@@ -16,16 +16,62 @@ class FileProviderExtension: NSFileProviderExtension {
         super.init()
     }
     
-    func item(for identifier: NSFileProviderItemIdentifier) throws -> NSFileProviderItem? {
-        // resolve the given identifier to a record in the model
+    // Original code returned NSFileProviderItem? instead of NSFileProviderItem - template
+    //   code fixed in XCode
+    override func item(for identifier: NSFileProviderItemIdentifier) throws -> NSFileProviderItem {
+
+        /******************************************************************
+         In "real" code, this would resolve to a record in our model.
+         However, for demonstration purposes, I'm just recreating the
+         FileProviderItems here.
+ 
+         The key to enabling our file provider as a destination for a move
+         or export appears to be to make sure that our rootContainer is
+         itself represented as a FileProviderItem with appropriate
+         capabilities.
+ 
+         Updating project with a new video to show how this can be verified
+         *******************************************************************/
         
-        // TODO: implement the actual lookup
-        return nil
+        // setting parentIdentifier here to identifier - just because I didn't
+        //   want to take the time to rework the interface to support optional
+        //   values. In a "real" provider, this would be done completely differently
+        //   anyway.
+        if identifier == NSFileProviderItemIdentifier.rootContainer {
+            return FileProviderItem(itemIdentifier: identifier,
+                                    parentIdentifier: identifier,
+                                    filename: "Root",
+                                    typeIdentifier: "public.folder")
+            
+        } else {
+            
+            var fileName:String? = nil
+            var typeIdentifier:String? = nil
+                
+            if identifier.rawValue == "item1" {
+                fileName = "File 1"
+                typeIdentifier = "public.text"
+            } else if identifier.rawValue == "item2" {
+                fileName = "File 2"
+                typeIdentifier = "public.text"
+            } else {
+                fileName = "Folder 1"
+                typeIdentifier = "public.folder"
+            }
+ 
+            return FileProviderItem(itemIdentifier: identifier,
+                                    parentIdentifier: NSFileProviderItemIdentifier.rootContainer,
+                                    filename: fileName!,
+                                    typeIdentifier: typeIdentifier!)
+          
+        }
+
     }
     
     override func urlForItem(withPersistentIdentifier identifier: NSFileProviderItemIdentifier) -> URL? {
         // resolve the given identifier to a file on disk
-        guard let item = try? item(for: identifier) else {
+    
+        guard let item = try? self.item(for: identifier) else {
             return nil
         }
         

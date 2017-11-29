@@ -1,6 +1,6 @@
 # Issue Enabling MoveToService and ExportToService in iOS11 File Provider
 
-# Description
+# Description - (Update: Partially Resolved - see comments at end)
 In iOS10, I have an application that contains both a document provider and file provider.  My document provider supports all 4 UIDocumentPicker modes....open, import, move and export.
 
 For iOS11, I want to replicate the same functionality - supporting all four modes - without the use of a document provider at all.  (Side note - iOS10-based document providers do not even show up in the standard UI when performing a .moveToService or .exportToService.)
@@ -55,6 +55,12 @@ My new file provider shows in this list but is disabled.
 </dict>
 ```
 
+# Resolution
+
+The root container must itself be represented as a FileProviderItem in order to support move/export.  Since it is a FileProviderItem, it contains capabilities that can be programmatically set to either allow or disallow its use as a destination for a move/export/copy.
+
+See SampleVideo-ResolvedIssue.mov for a demonstration of the new code
+See comments in FileProviderExtension.swift for more details
 
 
 
