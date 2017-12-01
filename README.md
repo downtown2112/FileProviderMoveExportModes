@@ -7,6 +7,10 @@ To their credit, at least they refunded my request.
 
 However, they did not even answer the part of my question that I was able to determine while waiting for answer. That in order to be "enabled" for a copy/move operation, your root level container must be modeled as a FileProviderItem with capabilities defined.
 
+I have entered the following RADARs in response to my TSI.
+35796540 File Provider - Can Not Move/Export to Root Container
+35796482 Cannot specify accepted UTIs for iOS File Provider
+
 # Description - (Update: Partially Resolved - see comments at end)
 In iOS10, I have an application that contains both a document provider and file provider.  My document provider supports all 4 UIDocumentPicker modes....open, import, move and export.
 
