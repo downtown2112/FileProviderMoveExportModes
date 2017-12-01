@@ -1,5 +1,12 @@
 # Issue Enabling MoveToService and ExportToService in iOS11 File Provider
 
+# Apple Technical Support Update
+Apple responded to my technical service request with no answers at all.  Their response simply said, "Our engineers have reviewed your request and have determined that this would be best handled as a bug report."
+
+To their credit, at least they refunded my request.
+
+However, they did not even answer the part of my question that I was able to determine while waiting for answer. That in order to be "enabled" for a copy/move operation, your root level container must be modeled as a FileProviderItem with capabilities defined.
+
 # Description - (Update: Partially Resolved - see comments at end)
 In iOS10, I have an application that contains both a document provider and file provider.  My document provider supports all 4 UIDocumentPicker modes....open, import, move and export.
 
@@ -27,9 +34,9 @@ My new file provider shows in this list but is disabled.
 
 # Questions
 
-1) In iOS 11 (as in this project), I will have no document provider.  How do I get my file provider to be enabled for selection in .moveToService and .exportToService use cases?
+1) In iOS 11 (as in this project), I will have no document provider.  How do I get my file provider to be enabled for selection in .moveToService and .exportToService use cases?   <update: My investigation reveals that the answer to this question is that the top-level root container must itself be modeled as a FileProviderItem with capabilities provider. Apple did not respond with an answer in my technical support request.>
 
-2) In iOS 10, my document provider defined supported modes and file types with the following information in its info.plist.  Where/how do I specify similar attributes in my iOS11 file provider?
+2) In iOS 10, my document provider defined supported modes and file types with the following information in its info.plist.  Where/how do I specify similar attributes in my iOS11 file provider?  <No answer provided by Apple in my technical support request>
 
 ```
 <key>NSExtension</key>
@@ -55,7 +62,7 @@ My new file provider shows in this list but is disabled.
 </dict>
 ```
 
-# Resolution
+# Partial Resolution
 
 The root container must itself be represented as a FileProviderItem in order to support move/export.  Since it is a FileProviderItem, it contains capabilities that can be programmatically set to either allow or disallow its use as a destination for a move/export/copy.
 
